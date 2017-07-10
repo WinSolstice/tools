@@ -31,7 +31,7 @@ user 代表真实存在的用户  host代表要登录的远程计算机
 
 ##### 免密码登录
 
-我们可以将本地机器上的公钥保存到特定的远程计算机上，这样当我们再次登录访问这台远程计算机时就可以实现免密码登录了。
+我们可以将本地机器上的公钥保存到特定的远程计算机上，https 加密协议需要每次都输入账户密码, ssh 加密协议将公钥上传到远端后,计算机在每次上传和下载时自己进行配对比较,这样当我们再次登录访问这台远程计算机时就可以实现免密码登录了。 
 + ssh-keygen -t rsa命令  创建公钥和秘钥
 
 参看下图：
@@ -47,10 +47,11 @@ user 代表真实存在的用户  host代表要登录的远程计算机
  <img src='images/miyao.png'  width=100px height=100px></img>
  id\_rsa.pub 文件就是生成的公钥
  id\_rsa 文件 文件是私钥
- 
+ host文件记录上传到github上的记录
+
 然后，我们该将公钥添加到远程计算机中，在此，我们已 github 为远程计算机示例
 ```
-ssh-copy-id user@host格式告诉我们用户可以把这个唯一的秘钥添加到远程计算机的用户目录/.ssh目录下
+ssh-copy-id user@host 格式告诉我们用户可以把这个唯一的秘钥添加到远程计算机的用户目录/.ssh目录下
 
 ```
 4. 打开 id\_rsa.pub 文件并复制里边的秘钥(注意：确保不要有任何的改变)
@@ -62,3 +63,32 @@ ssh-copy-id user@host格式告诉我们用户可以把这个唯一的秘钥添�
 
 
 添加后，服务器配对成功就会认为你这个客户端可信任。就可以访问这个服务器了。
+我们就可以通过 gitHub 提供的 Web 界面来管理我们的仓库了。
+
+至此，我们来回顾一下 git 的命令：
++ git config配置本地仓库
+  常用git config --global user.name / git config --global user.email
++ git config --list   查看配置详情
++ git init      初始一个仓库
++ git init --bare  初始化一个共享（裸）仓库
++ git status 可以查看当前仓库的状态
++ git add“文件” 将工作区中的文件添加到暂存区中，其中file可是一个单独的文件，也可以是一个目录、“*”、-A
++ git commit -m '备注信息' 将暂存区的文件，提交到本地仓库
++ git log 可以查看本地仓库的提交历史
++ git branch查看分支
++ git branch“分支名称” 创建一个新的分支
++ git checkout“分支名称” 切换分支
++ git checkout -b deeveloper 他健并切到developer分支
++ git merge“分支名称” 合并分支
++ git branch -d “分支名称” 删除分支
++ git clone “仓库地址”获取已有仓库的副本
++ git push origin “本地分支名称:远程分支名称”将本地分支推送至远程仓库，
++ git push origin hotfix（通常的写法）相当于
++ git push origin hotfix:hotfix
++ git push origin hotfix:newfeature
+
+本地仓库分支名称和远程仓库分支名称一样的情况下可以简写成一个，即git push “仓库地址” “分支名称”，如果远程仓库没有对应分支，将会自动创建
++ git remote add “主机名称” “远程仓库地址”添加远程主机，即给远程主机起个别名，方便使用
++ git remote 可以查看已添加的远程主机
++ git remote show “主机名称”可以查看远程主机的信息
+
