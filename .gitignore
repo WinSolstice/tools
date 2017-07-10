@@ -1,0 +1,9 @@
+node_modules 
+shell
+markdown
+.vscode
+.idea
+.git
+images
+Gulp-demo
+gulp.md
